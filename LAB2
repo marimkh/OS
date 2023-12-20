@@ -1,0 +1,47 @@
+#1 Կատարել հետեւյալ հրամանները, բացատրել տարբերությունը. cat > file1 cat file1 cat < file1
+cat > file1 # Ստեղծում է ֆայլ file1,  Ctrl+D -ով մուտքագրված տեքստը կգրվի file1-ում:
+cat file1 # Ցույց տալիս է file1-ի բովանդակությունը:
+cat < file1 # Ցույց տալիս է file1-ի բովանդակությունը:
+
+
+#2 Ստեղծել որոշակի պարունակությամբ 3 տեքստային ֆայլ՝ file1.txt, file2.txt, file3.txt։ Այս ֆայլերի պարունակությունը կցել միմյանց եւ գրել նոր ֆայլում՝ final.txt։
+cat > file1.txt
+cat > file2.txt
+cat > file3.txt
+cat file1.txt file2.txt file3.txt > Final.txt
+
+
+#3 Ցուցադրել /home/student դիրեկտորիայում տեքստային ֆայլերի քանակը։
+ls ./*.txt | wc -l
+
+
+#4 Սորտավորել file1.txt, file2.txt, file3.txt ֆայլերի պարունակությունը եւ գրել նոր ֆայլում։
+cat file1.txt file2.txt file3.txt | sort > sorted.txt
+
+
+#5 Արտածել /home/student դիրեկտորիայի առաջին 15 ֆայլերը՝ դասավորված նվազման կարգով ըստ ֆայլի ծավալի
+ls -S ./ | head -n 15
+
+#6 Արտածել /home/student դիրեկտորիայի ֆայլերի ցուցակը, միաժամանակ այն տեղադրելով ls.txt ֆայլում։
+ls ./ > ls.txt
+
+#7 Օգտագործելով tr հրամանը՝ գաղտնագրել "secret text" տողը ROT13 ալգորիթմով։ Վերծանել գաղտնագրված հաղորդագրությունը
+echo "secret text" | tr 'a-zA-Z' 'n-za-mN-ZA-M'
+echo "frperg grkg" | tr 'a-zA-Z' 'n-za-mN-ZA-M'
+
+
+#8 Ստեղծել նոր ֆայլ՝ home.txt, հետեւյալ պարունակությամբ. Student’s home directory is {home_dir}. sed հրամանի միջոցով փոխարինել {home_dir} հատվածը /home/student-ով։
+echo "Student’s home directory is {home_dir}." > home.txt
+sed 's/{home_dir}/\/home\/student/' home.txt > home_modified.txt
+
+
+#9 Ստեղծել ֆայլ, որն ունի առնվազն 5 տող պարունակություն՝ file4.txt։ Արտածել 2-4-րդ տողերը։
+echo "Line 1" > file4.txt
+echo "Line 2" >> file4.txt
+echo "Line 3" >> file4.txt
+echo "Line 4" >> file4.txt
+echo "Line 5" >> file4.txt
+sed -n '2p;4p' file4.txt
+
+#10 Ջնջել file4.txt ֆայլի 2-4-րդ տողերը։
+sed -i '2d;4d' file4_modified.txt

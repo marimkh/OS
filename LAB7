@@ -1,0 +1,102 @@
+#!/bin/bash
+
+#1. Գրել ծրագիր, որը կարտածի [0, 20] միջակայքի զույգ թվերը։ Օգտագործել while ցիկլ։
+count=0
+while [ $count -le 20 ]; do
+  echo $count
+  count=$((count + 2))
+done
+
+
+#2. Կատարել 1-ին առաջադրանքը՝ օգտագործելով until ցիկլ։
+count=0
+until [ $count -gt 20 ]; do
+  echo $count
+  count=$((count + 2))
+done
+
+
+#3. Գրել ծրագիր, որը գտնվում է անվերջ ցիկլի մեջ։ Ցիկլի յուրաքանչյուր իտերացիայում արտածել տվյալ ինդեքսի քառակուսին։ Ցիկլը ավարտել այն պահին, երբ արտածվող թիվը կգերազանցի 1000։ Օգտագործել while ցիկլ։
+index=0
+while true; do
+  square=$((index * index))
+  if [ $square -gt 1000 ]; then
+    break
+  fi
+  echo "Square of $index is $square"
+  index=$((index + 1))
+done
+
+
+#4. Կատարել 1-ին առաջադրանքը՝ օգտագործելով for ցիկլ։
+for ((count = 0; count <= 20; count += 2)); do
+  echo $count
+done
+#endregion
+
+#5. Գրել ծրագիր, որը որպես մուտքային տվյալ կստանա ամբողջ թիվ եւ կարտածի դրա կրկնապատիկը։ Ծրագիրը սկսելիս ցուցադրել հետեւյալ հաղորդագրությունը. Enter an integer number, or enter q to quit: Ամբողջ թիվ մուտքագրելուց հետո ցուցադրել դրա կրկնապատիկը, եւ կրկին ցուցադրել հաղորդագրությունը՝ մինչեւ q տառի սեղմումը։
+while true; do
+    echo "Enter an integer number, or enter q to quit:"
+    read input
+    if [ "$input" == "q" ]; then
+        break
+    fi
+    
+    if [[ ! $input =~ ^[0-9]+$ ]]; then
+        echo "Invalid input. Please enter an integer."
+        continue
+    fi
+    double=$((input * 2))
+    echo "Double: $double"
+done
+
+#6. Գրել ծրագիր, որը կստեղծի /home/student դիրեկտորիայի տեքստային ֆայլերի անունները պարունակող ֆայլ։ while ցիկլի միջոցով համարակալել այս ֆայլերի անունները եւ արտածել։
+index=1
+while [ $index -le 5 ]; do
+  touch ./file_$index.txt
+  index=$((index + 1))
+done
+
+
+#7. Գրել ծրագիր, որը for ցիկլի միջոցով կարտածի [0, 30] միջակայքում գտնվող 3-ի բազմապատիկ թվերը
+for ((i = 3; i <= 30; i+=3)); do
+  echo $i
+done
+
+
+#8. Գրել ծրագիր, որը for ցիկլի միջոցով կարտածի ընթացիկ դիրեկտորիայի բոլոր տեքստային ֆայլերի անունները։
+for file in *; do
+  echo "$file"
+done
+
+
+#9. Գրել ծրագիր, որը որպես արգումենտ կստանա ֆայլերի անուններ, եւ այդ ֆայլերից յուրաքանչյուրի համար կարտածի ֆայլի ամենակարճ բառը եւ դրա երկարությունը։
+for file in "$@"; do
+    if [[ -r $file ]]; then
+        shortest=""
+        length=9999
+        while read -r word; do
+            if (( ${#word} < length && ${#word}!=0)); then
+                shortest=$word
+                length=${#word}
+            fi
+        done < "$file"
+        echo "File: $file | Shortest word: '$shortest' | Length: $length"
+    else
+        echo "$file: File not readable"
+    fi
+done
+
+#10. Գրել ծրագիր, որը որպես արգումենտներ կստանա ֆայլերի անուններ, եւ դրանցից յուրաքանչյուրի համար կստուգի, թե արդյո՞ք տվյալ ֆայլը գոյություն ունի, թե ոչ։ Գոյություն ունենալու դեպքում ստուգել, թե արդյո՞ք ֆայլն ունի կարդալու թույլտվություն։ Արտածել համապատասխան հաղորդագրություններ։
+for file in "$@"; do
+  if [ -e "$file" ]; then
+    echo "$file exists."
+    if [ -r "$file" ]; then
+      echo "$file is readable."
+    else
+      echo "$file is not readable."
+    fi
+  else
+    echo "$file does not exist."
+  fi
+done
